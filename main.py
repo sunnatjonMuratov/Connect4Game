@@ -80,28 +80,23 @@ def evaluate_window(window, piece):
     opp_piece = PLAYER_PIECE
     if piece == PLAYER_PIECE:
         opp_piece = AI_PIECE
-
     if window.count(piece) == 4:
         score += 100
     elif window.count(piece) == 3 and window.count(EMPTY) == 1:
         score += 5
     elif window.count(piece) == 2 and window.count(EMPTY) == 2:
         score += 2
-
     if window.count(opp_piece) == 3 and window.count(EMPTY) == 1:
         score -= 4
-
     return score
 
 
 def score_position(board, piece):
     score = 0
-
     ## Score center column
     center_array = [int(i) for i in list(board[:, COLUMN_COUNT // 2])]
     center_count = center_array.count(piece)
     score += center_count * 3
-
     ## Score Horizontal
     for r in range(ROW_COUNT):
         row_array = [int(i) for i in list(board[r, :])]
@@ -115,18 +110,15 @@ def score_position(board, piece):
         for r in range(ROW_COUNT - 3):
             window = col_array[r:r + WINDOW_LENGTH]
             score += evaluate_window(window, piece)
-
     ## Score posiive sloped diagonal
     for r in range(ROW_COUNT - 3):
         for c in range(COLUMN_COUNT - 3):
             window = [board[r + i][c + i] for i in range(WINDOW_LENGTH)]
             score += evaluate_window(window, piece)
-
     for r in range(ROW_COUNT - 3):
         for c in range(COLUMN_COUNT - 3):
             window = [board[r + 3 - i][c + i] for i in range(WINDOW_LENGTH)]
             score += evaluate_window(window, piece)
-
     return score
 
 
@@ -286,7 +278,6 @@ while not game_over:
 
     # # Ask for Player 2 Input
     if turn == AI and not game_over:
-
         # col = random.randint(0, COLUMN_COUNT-1)
         # col = pick_best_move(board, AI_PIECE)
         col, minimax_score = minimax(board, 5, -math.inf, math.inf, True)
